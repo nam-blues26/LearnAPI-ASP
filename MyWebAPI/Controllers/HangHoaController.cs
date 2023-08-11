@@ -34,31 +34,31 @@ namespace MyWebAPI.Controllers
            
         }
 
-        //[HttpGet("{id}")]
-        //public IActionResult EditById(string id, HangHoa hangHoaEdit)
-        //{
-        //    try
-        //    {
-        //        var hangHoa = hangHoas.SingleOrDefault(hh => hh.MaHangHoa == Guid.Parse(id));
-        //        if (hangHoa == null)
-        //        {
-        //            return NotFound();
-        //        }
+        [HttpPut("{id}")]
+        public IActionResult EditById(string id, HangHoa hangHoaEdit)
+        {
+            try
+            {
+                var hangHoa = hangHoas.SingleOrDefault(hh => hh.MaHangHoa == Guid.Parse(id));
+                if (hangHoa == null)
+                {
+                    return NotFound();
+                }
 
-        //        if (id != hangHoa.MaHangHoa.ToString())
-        //        {
-        //            return BadRequest();
-        //        }
-        //        hangHoa.TenHangHoa = hangHoaEdit.TenHangHoa;
-        //        hangHoa.DonGia = hangHoaEdit.DonGia;
-        //        return Ok();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest();
-        //    }
+                if (id != hangHoa.MaHangHoa.ToString())
+                {
+                    return BadRequest();
+                }
+                hangHoa.TenHangHoa = hangHoaEdit.TenHangHoa;
+                hangHoa.DonGia = hangHoaEdit.DonGia;
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
 
-        //}
+        }
 
         [HttpPost]
         public IActionResult Create(HangHoaVM hangHoaVM)
@@ -73,6 +73,29 @@ namespace MyWebAPI.Controllers
             {
                 Success = true, Data = hanghoa
             });
+        }
+
+        [HttpDelete]
+        public IActionResult Remove(String id) {
+            try
+            {
+                var hangHoa = hangHoas.SingleOrDefault(hh => hh.MaHangHoa == Guid.Parse(id));
+                if (hangHoa == null)
+                {
+                    return NotFound();
+                }
+
+                if (id != hangHoa.MaHangHoa.ToString())
+                {
+                    return BadRequest();
+                }
+                hangHoas.Remove(hangHoa);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
     }
 }
